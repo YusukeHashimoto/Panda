@@ -1,12 +1,19 @@
 board = [[" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], 
 [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "]] 
 
+KING    = "K"
+QUEEN   = "Q"
+ROOK    = "R"
+BISHOP  = "B"
+KNIGHT  = "N"
+PAWN    = "P"
+
 
 def addWhitePiece(x, y, s):
-    board[y-1][x-1] = s
+    board[x-1][y-1] = s
 
 def addBlackPiece(x,y,s):
-    board[y-1][x-1] = '\033[47m\33[30m' + s + '\033[0m'
+    board[x-1][y-1] = '\033[47m\33[30m' + s + '\033[0m'
 
 def initBoard():
     for i in range(0,8):
@@ -14,26 +21,26 @@ def initBoard():
             board[i][j] = " "
 
     for i in range(1,9):
-        addWhitePiece(i, 7, "P")
-    addWhitePiece(1,8,"R")
-    addWhitePiece(2,8,"N")
-    addWhitePiece(3,8,"B")
-    addWhitePiece(4,8,"K")
-    addWhitePiece(5,8,"Q")
-    addWhitePiece(6,8,"B")
-    addWhitePiece(7,8,"N")
-    addWhitePiece(8,8,"R")
+        addWhitePiece(i, 7, PAWN)
+    addWhitePiece(1,8,ROOK)
+    addWhitePiece(2,8,KNIGHT)
+    addWhitePiece(3,8,BISHOP)
+    addWhitePiece(4,8,KING)
+    addWhitePiece(5,8,QUEEN)
+    addWhitePiece(6,8,BISHOP)
+    addWhitePiece(7,8,KNIGHT)
+    addWhitePiece(8,8,ROOK)
 
     for i in range(1,9):
-        addBlackPiece(i, 2, "P")
-    addBlackPiece(1,1,"R")
-    addBlackPiece(2,1,"N")
-    addBlackPiece(3,1,"B")
-    addBlackPiece(4,1,"Q")
-    addBlackPiece(5,1,"K")
-    addBlackPiece(6,1,"B")
-    addBlackPiece(7,1,"N")
-    addBlackPiece(8,1,"R")
+        addBlackPiece(i, 2, PAWN)
+    addBlackPiece(1,1,ROOK)
+    addBlackPiece(2,1,KNIGHT)
+    addBlackPiece(3,1,BISHOP)
+    addBlackPiece(4,1,QUEEN)
+    addBlackPiece(5,1,KING)
+    addBlackPiece(6,1,BISHOP)
+    addBlackPiece(7,1,KNIGHT)
+    addBlackPiece(8,1,ROOK)
 
 
 def drawBoard():
@@ -46,14 +53,14 @@ def drawBoard():
     for i in range(0,8):
         s = str(i+1) + " "
         for j in range(0,8):
-            s += board[i][j] + " "
+            s += board[j][i] + " "
         print(s)
     print()
 
 def move(fromX, fromY, toX, toY):
-    piece = board[fromY-1][fromX-1]
-    board[fromY-1][fromX-1] = " "
-    board[toY-1][toX-1] = piece
+    piece = board[fromX-1][fromY-1]
+    board[fromX-1][fromY-1] = " "
+    board[toX-1][toY-1] = piece
 
 def inputCommand():
     print(">", end="")
