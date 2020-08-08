@@ -1,3 +1,5 @@
+from enum import Enum, auto
+
 KING    = "K"   #King
 QUEEN   = "Q"   #Queen
 ROOK    = "R"   #Rook
@@ -16,12 +18,20 @@ board = [
 [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
 [EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY]]
 
+class ErrorType(Enum):
+    INVALID_COMMAND = auto()
+    INVALID_MOVING = auto()
+
+BLACK_PREFIX = '\033[47m\33[30m'
+BLACK_POSTFIX = '\033[0m'
+WHITE_PREFIX = ''
+WHITE_POSTFIX = ''
 
 def addWhitePiece(x, y, s):
-    board[x-1][y-1] = s
+    board[x-1][y-1] = WHITE_PREFIX + s + WHITE_POSTFIX
 
 def addBlackPiece(x, y, s):
-    board[x-1][y-1] = '\033[47m\33[30m' + s + '\033[0m'
+    board[x-1][y-1] = BLACK_PREFIX + s + BLACK_POSTFIX
 
 def initBoard():
     for i in range(0,8):
@@ -78,24 +88,34 @@ def canMove(fromX, fromY, toX, toY):
         result = True
     return result
 
-def validateCommand():
-    # implement later
-    return True
+def validateCommand(command):
+    result = True
+    if(len(command) != 4):
+        result = False
+
+    else:
+        for i in range(0,4):
+            if len(command[i]) < 1:
+                result = False
+                break
+            if command[i].isdecimal == False:
+                result = False
+
+    return result
 
 def inputCommand():
     validCommand = False
     while validCommand == False:
         print(">", end="")
         command = input().split(',')
-        if validateCommand() == False:
-            validCommand = False
-        
-        command = list(map(lambda x: int(x), command))
-        if len(command) != 4:
-            validCommand == False
+        validCommand = validateCommand(command)
+
+        if validCommand == True:
+            command = list(map(lambda x: int(x), command))  #translate position from string to int
+            if canMove(command[0],command[1],command[2],command[3]) == False:
+                validCommand = False
+                print("You cannot move")
         else:
-             validCommand = canMove(command[0],command[1],command[2],command[3])
-        if validCommand == False:
             print("Invalid command")
     
     print()
