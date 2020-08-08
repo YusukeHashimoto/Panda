@@ -1,24 +1,32 @@
-board = [[" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], 
-[" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "], [" ", " ", " ", " ", " ", " ", " ", " "]] 
+KING    = "K"   #King
+QUEEN   = "Q"   #Queen
+ROOK    = "R"   #Rook
+BISHOP  = "B"   #Bishop
+KNIGHT  = "N"   #kNight
+PAWN    = "P"   #Pawn
+EMPTY   = " "   #(empty)
 
-KING    = "K"
-QUEEN   = "Q"
-ROOK    = "R"
-BISHOP  = "B"
-KNIGHT  = "N"
-PAWN    = "P"
+board = [
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY], 
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY],
+[EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY, EMPTY]]
 
 
 def addWhitePiece(x, y, s):
     board[x-1][y-1] = s
 
-def addBlackPiece(x,y,s):
+def addBlackPiece(x, y, s):
     board[x-1][y-1] = '\033[47m\33[30m' + s + '\033[0m'
 
 def initBoard():
     for i in range(0,8):
         for j in range(0,8):
-            board[i][j] = " "
+            board[i][j] = EMPTY
 
     for i in range(1,9):
         addWhitePiece(i, 7, PAWN)
@@ -46,31 +54,56 @@ def initBoard():
 def drawBoard():
     s = "  "
     for i in range(0,8):
-        s += str(i+1) + " "
+        s += str(i+1) + EMPTY
     print(s)
 
-    s = " "
+    s = EMPTY
     for i in range(0,8):
-        s = str(i+1) + " "
+        s = str(i+1) + EMPTY
         for j in range(0,8):
-            s += board[j][i] + " "
+            s += board[j][i] + EMPTY
         print(s)
     print()
 
 def move(fromX, fromY, toX, toY):
     piece = board[fromX-1][fromY-1]
-    board[fromX-1][fromY-1] = " "
+    board[fromX-1][fromY-1] = EMPTY
     board[toX-1][toY-1] = piece
 
+def canMove(fromX, fromY, toX, toY):
+    result = True
+    if(board[fromX-1][fromY-1] == EMPTY):
+        result = False
+    else:
+        result = True
+    return result
+
+def validateCommand():
+    # implement later
+    return True
+
 def inputCommand():
-    print(">", end="")
-    command = input().split(',')
+    validCommand = False
+    while validCommand == False:
+        print(">", end="")
+        command = input().split(',')
+        if validateCommand() == False:
+            validCommand = False
+        
+        command = list(map(lambda x: int(x), command))
+        if len(command) != 4:
+            validCommand == False
+        else:
+             validCommand = canMove(command[0],command[1],command[2],command[3])
+        if validCommand == False:
+            print("Invalid command")
+    
     print()
 
-    fromX   = int(command[0])
-    fromY   = int(command[1])
-    toX     = int(command[2])
-    toY     = int(command[3])
+    fromX   = command[0]
+    fromY   = command[1]
+    toX     = command[2]
+    toY     = command[3]
 
     move(fromX,fromY,toX,toY)
 
