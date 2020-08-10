@@ -40,10 +40,12 @@ class Piece(metaclass = ABCMeta):
         return result
 
     def __checkDestPos(self, toX, toY):
-        if self.board[toX-1][toY-1] == None:
+#        if self.board[toX-1][toY-1] == None:
+        if self.board.getPieceAt(toX,toY) == None:
             return True
         else:
-            return not(self.board[toX-1][toY-1].color == self.color)
+            return not(self.board.getPieceAt(toX,toY).color == self.color)
+#            return not(self.board[toX-1][toY-1].color == self.color)
     
     def draw(self):
         if self.color == Color.WHITE:
