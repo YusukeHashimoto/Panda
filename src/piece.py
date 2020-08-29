@@ -52,7 +52,8 @@ class Piece(metaclass = ABCMeta):
             s = WHITE_PREFIX + self.ch + WHITE_POSTFIX
         else:
             s = BLACK_PREFIX + self.ch + BLACK_POSTFIX
-        print(s)
+#        print(s, end="")
+        return s
 
 class King(Piece):
     ch = "K"    #King
