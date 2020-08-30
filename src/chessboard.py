@@ -51,9 +51,9 @@ class ChessBoard:
 
             print("")
 
-board = ChessBoard()
+#board = ChessBoard()
 
-king = King(Color.WHITE, board)
-board.addPiece(king, 7, 4)
-
-board.draw()
+#king = King(Color.WHITE, board)
+#board.addPiece(king, 7, 4)
+#
+#board.draw()
