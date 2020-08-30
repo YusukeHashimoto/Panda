@@ -22,6 +22,10 @@ class Piece(metaclass = ABCMeta):
     def canMove(self, fromX, fromY, toX, toY):
         result = True
 
+        pos = self.getOwnPos()
+        fromX = pos[0]
+        fromY = pos[1]
+
         if self.__checkRange(toX, toY) == False:
             result = False  #destination is out of board
         elif self.__checkDestPos(toX, toY) == False:
