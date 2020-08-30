@@ -19,7 +19,7 @@ class Piece(metaclass = ABCMeta):
         self.board = board
 
     @abstractmethod
-    def canMove(self, fromX, fromY, toX, toY):
+    def canMove(self, toX, toY):
         result = True
 
         pos = self.getOwnPos()
@@ -68,8 +68,12 @@ class Piece(metaclass = ABCMeta):
 class King(Piece):
     ch = "K"    #King
 
-    def canMove(self, fromX, fromY, toX, toY):
-        result = super().canMove(fromX, fromY, toX, toY)
+    def canMove(self, toX, toY):
+        result = super().canMove(toX, toY)
+
+        pos = self.getOwnPos()
+        fromX = pos[0]
+        fromY = pos[1]
 
         if (abs(fromX - toX) < 2) and (abs(fromY - toY) < 2) and not((fromX == toX) and (fromY == toY)):
             result = result and True
