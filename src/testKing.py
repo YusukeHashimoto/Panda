@@ -23,6 +23,9 @@ class TestKing(unittest.TestCase):
         self.assertEqual(True, self.king.canMove(1,2))
 
         self.assertEqual(False, self.king.canMove(1,4))
+        self.assertEqual(False, self.king.canMove(1,8))
+        self.assertEqual(False, self.king.canMove(8,7))
+        self.assertEqual(False, self.king.canMove(1,-1))
 
     def test_getOwnPos(self):
         self.board.addPiece(self.king, 0, 0)
