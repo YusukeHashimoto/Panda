@@ -55,6 +55,12 @@ class Piece(metaclass = ABCMeta):
 #        print(s, end="")
         return s
 
+    def getOwnPos(self):
+        for x in range(0,8):
+            for y in range(0,8):
+                if self == self.board.getPieceAt(x,y):
+                    return (x,y)
+
 class King(Piece):
     ch = "K"    #King
 
