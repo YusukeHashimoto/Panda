@@ -28,21 +28,31 @@ class ChessBoard:
         'h' : 7,
     }
 
-    def getPieceAt(self, x, y):
-        return self.board[x-1][y-1]
+    def getPieceAt(self, arg1, arg2 = DEFAULT_ARG):
+        if arg2 == DEFAULT_ARG:
+            x = self.posMap[arg1[0]]
+            y = int(arg1[1]) - 1
+        else:
+            x = arg1 - 1
+            y = arg2 - 1
+
+        return self.board[x][y]
 
     def empty(self):
         for x in range(COLUMN_MIN, COLUMN_MAX):
             for y in range(ROW_MIN, ROW_MAX):
                 self.board[x][y] = None
 
-    def addPiece(self, piece, x, y=DEFAULT_ARG):
-        if y == DEFAULT_ARG:    #access like 'c7'
-            nx = self.posMap[x[0]]
-            ny = int(x[1]) - 1
-            self.board[nx][ny] = piece
+    def addPiece(self, piece, arg1, arg2=DEFAULT_ARG):
+        if arg2 == DEFAULT_ARG:    #access like 'c7'
+            x = self.posMap[arg1[0]]
+            y = int(arg1[1]) - 1
+#            self.board[x][y] = piece
         else:                   #access like '2,7'
-            self.board[x-1][y-1] = piece
+            x = arg1 - 1
+            y = arg2 - 1
+#            self.board[x-1][y-1] = piece
+        self.board[x][y] = piece
 
 #    def initialize(self):
 
