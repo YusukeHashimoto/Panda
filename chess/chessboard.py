@@ -4,6 +4,7 @@ COLUMN_MIN = 0
 ROW_MIN = 0
 COLUMN_MAX = 8
 ROW_MAX = 8
+DEFAULT_ARG = -1
 
 class ChessBoard:
     board = [
@@ -16,6 +17,17 @@ class ChessBoard:
     [None, None, None, None, None, None, None, None],
     [None, None, None, None, None, None, None, None]]
 
+    posMap = {
+        'a' : 0,
+        'b' : 1,
+        'c' : 2,
+        'd' : 3,
+        'e' : 4,
+        'f' : 5,
+        'g' : 6,
+        'h' : 7,
+    }
+
     def getPieceAt(self, x, y):
         return self.board[x-1][y-1]
 
@@ -24,8 +36,13 @@ class ChessBoard:
             for y in range(ROW_MIN, ROW_MAX):
                 self.board[x][y] = None
 
-    def addPiece(self, piece, x, y):
-        self.board[x-1][y-1] = piece
+    def addPiece(self, piece, x, y=DEFAULT_ARG):
+        if y == DEFAULT_ARG:    #access like 'c7'
+            nx = self.posMap[x[0]]
+            ny = int(x[1]) - 1
+            self.board[nx][ny] = piece
+        else:                   #access like '2,7'
+            self.board[x-1][y-1] = piece
 
 #    def initialize(self):
 
@@ -51,9 +68,3 @@ class ChessBoard:
 
             print("")
 
-#board = ChessBoard()
-
-#king = King(Color.WHITE, board)
-#board.addPiece(king, 7, 4)
-#
-#board.draw()

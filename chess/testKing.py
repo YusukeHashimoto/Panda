@@ -22,6 +22,7 @@ class TestKing(unittest.TestCase):
         self.assertEqual(True, self.king.canMove(2,2))
         self.assertEqual(True, self.king.canMove(1,2))
 
+        self.assertEqual(False, self.king.canMove(0,0))
         self.assertEqual(False, self.king.canMove(1,4))
         self.assertEqual(False, self.king.canMove(1,8))
         self.assertEqual(False, self.king.canMove(8,7))
@@ -37,10 +38,12 @@ class TestKing(unittest.TestCase):
         self.assertEqual(True, self.king.canMove(1,2))
 
         self.board.empty()
-        self.board.addPiece(self.king, 0,0)
-        self.assertEqual(False, self.king.canMove(0,0))
-        self.assertEqual(False, self.king.canMove(0,-1))
-        self.assertEqual(False, self.king.canMove(-1,0))
+        self.board.addPiece(self.king, 'a1')
+#        self.board.addPiece(self.king, 1,1)
+        self.assertEqual(True, self.king.canMove(2,1))
+        self.assertEqual(True, self.king.canMove(2,2))
+        self.assertEqual(True, self.king.canMove(1,2))
+
 
     def test_getOwnPos(self):
         self.board.addPiece(self.king, 0, 0)
